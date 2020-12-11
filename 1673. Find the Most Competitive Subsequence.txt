@@ -1,0 +1,27 @@
+class Solution {
+    public int[] mostCompetitive(int[] nums, int k) {
+        Stack<Integer> st = new Stack<>();
+        st.push(nums[0]);
+        for(int i=1; i<nums.length; i++) {
+            if(st.isEmpty()){
+                st.push(nums[i]);
+                continue;
+            }
+            int num = nums.length - i - 1;
+            while(st.size() > 0 && nums[i] < st.peek() && st.size() + num >= k) {
+                st.pop();
+            }
+            if(st.size() < k) {
+                st.push(nums[i]);
+            }
+        }
+        
+        int ans[] = new int[k];
+        int i = k - 1;
+        while(!st.isEmpty()) {
+            ans[i] = st.pop();
+            i --;
+        }
+        return ans;
+    }
+}
